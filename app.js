@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
             locationSuccess: "Standort erfolgreich gesendet!",
             locationError: "Fehler bei der Standortermittlung:",
             sendError: "Fehler beim Senden des Standorts.",
+            locationUploaded: "Der Standort wurde erfolgreich übermittelt!",
         },
         en: {
             title: "Location Tracker",
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
             locationSuccess: "Location successfully sent!",
             locationError: "Error getting location:",
             sendError: "Error sending location.",
+            locationUploaded: "The location has been successfully uploaded!",
         }
     };
 
@@ -37,9 +39,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("sendLocationBtn").textContent = t.buttonText;
     document.getElementById("status").textContent = t.statusDefault;
 
+    // Den statusElement-Referenz direkt hier definieren, sodass sie im gesamten Scope verwendet werden kann
+    const statusElement = document.getElementById("status");
+
     // Event-Listener für den Button
     document.getElementById("sendLocationBtn").addEventListener("click", function() {
-        const statusElement = document.getElementById("status");
         statusElement.textContent = t.locating;
 
         if (navigator.geolocation) {
@@ -96,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.json();
         })
         .then(data => {
-            statusElement.textContent = t.locationSuccess;
+            statusElement.textContent = t.locationUploaded;  // Erfolgreiche Nachricht anzeigen
         })
         .catch(error => {
             statusElement.textContent = t.sendError;
